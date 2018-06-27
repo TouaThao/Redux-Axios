@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import { connect } from 'react-redux';
 import ColorList from './ColorList/ColorList';
+import axios from 'axios';
 
 // Allowing us to access reduxState on props
 const mapReduxStateToProps = (reduxStore) => ({
@@ -23,15 +24,38 @@ class App extends Component {
     })
   }
 
+  // TODO: Rename to sendColorToServer
   sendColorToRedux = () => {
     // Send the color to redux with an action type of ADD_COLOR
-    const action = {type: 'ADD_COLOR', payload: this.state.color};
-    this.props.dispatch(action);
+    // const action = {type: 'ADD_COLOR', payload: this.state.color};
+    // this.props.dispatch(action);
+    const body = {name: this.state.color, count: 1};
+    axios.post('/api/colors', body).then((response) => {
+      this.refreshData();
+    }).catch((error) => {
+      console.log(error);
+      alert('Something went wrong.');
+    });
   }
 
   deleteAllColors = () => {
     const action = {type: 'DELETE_COLORS'};
     this.props.dispatch(action);
+  }
+
+  refreshData() {
+    axios.get('/api/colors').then((response) => {
+      console.log(response.data);
+      const action = { type: 'SET_COLORS', payload: response.data };
+      this.props.dispatch(action);
+    }).catch((error) => {
+      console.log(error);
+      alert('Something went wrong');
+    });
+  }
+
+  componentDidMount() {
+    this.refreshData();
   }
 
   render() {

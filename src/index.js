@@ -24,11 +24,8 @@ const counterReducer = (state = 0, action) => {
 }
 
 const secondReducer = (state = [], action) => {
-    if(action.type === 'ADD_COLOR') {
-        // Adding our new color to the array
-        return [...state, action.payload];
-    } else if(action.type === 'DELETE_COLORS') {
-        return [];
+    if(action.type === 'SET_COLORS') {
+        return action.payload; // is the array of colors!
     }
     return state;
 }
