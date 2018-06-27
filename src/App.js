@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { connect } from 'react-redux';
+import ColorList from './ColorList/ColorList';
 
 // Allowing us to access reduxState on props
 const mapReduxStateToProps = (reduxStore) => ({
@@ -49,6 +50,7 @@ class App extends Component {
         <input onChange={this.handleColorChange} value={this.state.color} />
         <button onClick={this.sendColorToRedux}>Submit</button>
         <button onClick={this.deleteAllColors}>Delete ALL Colors</button>
+        <ColorList />
         
       </div>
     );
