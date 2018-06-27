@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-    res.send(['Red','Yellow','Teal','Orange']);
+    res.send([{name:'Red', count:2},{name:'Yellow', count:4}]);
 });
 
 router.post('/', (req, res) => {
