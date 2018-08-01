@@ -30,12 +30,14 @@ const secondReducer = (state = [], action) => {
     return state;
 }
 
+
+
 const storeInstance = createStore(
     // This is a reducer. It's called when the page loads or
     // dispatch is called.
     combineReducers({
         counterReducer,
-        secondReducer
+        secondReducer,
     }),
     applyMiddleware(logger)
 );

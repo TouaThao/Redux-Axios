@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { connect } from 'react-redux';
 import ColorList from './ColorList/ColorList';
@@ -29,21 +28,33 @@ class App extends Component {
     // Send the color to redux with an action type of ADD_COLOR
     // const action = {type: 'ADD_COLOR', payload: this.state.color};
     // this.props.dispatch(action);
-    const body = {name: this.state.color, count: 1};
-    //Post Body to /api/colors
+    const body = {name: this.state.color, count: this.props.reduxStore.counterReducer};
+    // Post Body to /api/colors
+    axios.post('/api/colors',body).then((reponse)=>{
+      console.log(reponse)
+      this.refreshData()
+    })
   }
 
-  deleteAllColors = () => {
-    const action = {type: 'DELETE_COLORS'};
-    this.props.dispatch(action);
+  deleteAllColors = ()=>{
+        axios.delete('/api/colors').then((reponse)=>{
+        this.refreshData()
+      })
+    
   }
 
   refreshData() {
-    //Get data from /api/colors
+    axios.get('/api/colors').then( (response) => {
+      this.props.dispatch({
+        type: 'SET_COLORS',
+        payload: response.data
+      })
+  }) 
   }
 
   componentDidMount() {
     this.refreshData();
+
   }
 
   render() {
@@ -57,7 +68,6 @@ class App extends Component {
         <button onClick={() => this.props.dispatch({type: 'ADD'})}>Add</button>
         {/* Subtract button */}
         <button onClick={() => this.props.dispatch({type: 'SUBTRACT'})}>Subtract</button>
-
         <h3>Enter Color Here:</h3>
         <input onChange={this.handleColorChange} value={this.state.color} />
         <button onClick={this.sendColorToRedux}>Submit</button>
