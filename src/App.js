@@ -30,12 +30,7 @@ class App extends Component {
     // const action = {type: 'ADD_COLOR', payload: this.state.color};
     // this.props.dispatch(action);
     const body = {name: this.state.color, count: 1};
-    axios.post('/api/colors', body).then((response) => {
-      this.refreshData();
-    }).catch((error) => {
-      console.log(error);
-      alert('Something went wrong.');
-    });
+    //Post Body to /api/colors
   }
 
   deleteAllColors = () => {
@@ -44,14 +39,7 @@ class App extends Component {
   }
 
   refreshData() {
-    axios.get('/api/colors').then((response) => {
-      console.log(response.data);
-      const action = { type: 'SET_COLORS', payload: response.data };
-      this.props.dispatch(action);
-    }).catch((error) => {
-      console.log(error);
-      alert('Something went wrong');
-    });
+    //Get data from /api/colors
   }
 
   componentDidMount() {
