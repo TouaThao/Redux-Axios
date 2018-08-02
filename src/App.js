@@ -23,33 +23,28 @@ class App extends Component {
     })
   }
 
-  // TODO: Rename to sendColorToServer
   sendColorToRedux = () => {
-    // Send the color to redux with an action type of ADD_COLOR
-    // const action = {type: 'ADD_COLOR', payload: this.state.color};
-    // this.props.dispatch(action);
-    const body = {name: this.state.color, count: this.props.reduxStore.counterReducer};
-    // Post Body to /api/colors
-    axios.post('/api/colors',body).then((reponse)=>{
+    const body = { name: this.state.color, count: this.props.reduxStore.counterReducer };
+    axios.post('/api/colors', body).then((reponse) => {
       console.log(reponse)
       this.refreshData()
     })
   }
 
-  deleteAllColors = ()=>{
-        axios.delete('/api/colors').then((reponse)=>{
-        this.refreshData()
-      })
-    
+  deleteAllColors = () => {
+    axios.delete('/api/colors').then((reponse) => {
+      this.refreshData()
+    })
+
   }
 
   refreshData() {
-    axios.get('/api/colors').then( (response) => {
+    axios.get('/api/colors').then((response) => {
       this.props.dispatch({
         type: 'SET_COLORS',
         payload: response.data
       })
-  }) 
+    })
   }
 
   componentDidMount() {
@@ -65,15 +60,14 @@ class App extends Component {
         {/* The value of the reducer will be what state is */}
         <div>{this.props.reduxStore.counterReducer}</div>
         {/* dispatch takes in an action */}
-        <button onClick={() => this.props.dispatch({type: 'ADD'})}>Add</button>
+        <button onClick={() => this.props.dispatch({ type: 'ADD' })}>Add</button>
         {/* Subtract button */}
-        <button onClick={() => this.props.dispatch({type: 'SUBTRACT'})}>Subtract</button>
+        <button onClick={() => this.props.dispatch({ type: 'SUBTRACT' })}>Subtract</button>
         <h3>Enter Color Here:</h3>
         <input onChange={this.handleColorChange} value={this.state.color} />
         <button onClick={this.sendColorToRedux}>Submit</button>
         <button onClick={this.deleteAllColors}>Delete ALL Colors</button>
         <ColorList />
-        
       </div>
     );
   }

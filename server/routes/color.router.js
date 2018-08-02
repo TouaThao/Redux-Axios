@@ -14,9 +14,16 @@ router.post('/', (req, res) => {
     res.sendStatus(201);
 });
 
-router.delete('/', (req,res)=>{
+router.delete('/', (req, res) => {
     colors = []
     res.sendStatus(201);
 });
+
+router.delete('/:id', (req, res) => {
+    colors.splice(req.params.i, 1)
+    res.sendStatus(201);
+});
+
+
 
 module.exports = router;
